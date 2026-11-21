@@ -8,11 +8,9 @@ WHEN DAYNAME(TO_TIMESTAMP(STARTED_AT)) in ('Sat','Sun')
 THEN 'WEEKEND'
 ELSE 'BUSINESSDAY'
 END AS DAY_TYPE,
-
-
-    {{get_season('STARTED_AT')}} STATION_OF_YEAR
+{{get_season('STARTED_AT')}} STATION_OF_YEAR
 from
-{{ source('demo', 'bike') }}
+{{ ref('stg_bike') }}
 where STARTED_AT != 'started_at' and STARTED_AT != '"started_at"'
 )
 select 
